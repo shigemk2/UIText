@@ -25,6 +25,8 @@ class TextViewController < UIViewController
   end
 
   def changeBackgroungColor(sender)
+    @text_field.resignFirstResponder
+
     if validateHex(@text_field.text) == nil
       alert = UIAlertView.new
       alert.message = "#{@text_field.text} is not valid hex color!"
