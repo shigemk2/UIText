@@ -11,24 +11,26 @@ class TextViewController < UIViewController
     @text_field.autocapitalizationType = UITextAutocapitalizationTypeNone
     @text_field.borderStyle            = UITextBorderStyleRoundedRect
     @text_field.center                 = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2 - 100)
-    @text_field.keyboardType           = UIKeyboardTypePhonePad
     self.view.addSubview @text_field
 
     @search = UIButton.buttonWithType(UIButtonTypeRoundedRect)
-    @search.setTitle("TAP!", forState:UIControlStateNormal)
+    @search.setTitle("Change Color!", forState:UIControlStateNormal)
     @search.sizeToFit
+
     # Add function
     @search.addTarget(self,
-                      action:"showTarget:",
+                      action:"changeBackgroungColor:",
                       forControlEvents:UIControlEventTouchUpInside)
     @search.center = CGPointMake(self.view.frame.size.width / 2, @text_field.center.y + 40)
     self.view.addSubview @search
   end
 
-  def showTarget(sender)
-    alert = UIAlertView.new
-    alert.message = @text_field.text
-    alert.addButtonWithTitle 'OK'
-    alert.show
+  def changeBackgroungColor(sender)
+    @color = colorWithHex(@text_field.text)
+    self.view.backgroundColor = @color
+  end
+
+  def colorWithHex(hex)
+    color = String.new(@text_field.text).to_color
   end
 end
