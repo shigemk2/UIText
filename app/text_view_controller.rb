@@ -2,7 +2,6 @@ class TextViewController < UIViewController
   def viewDidLoad
     super
     @view = self.view
-    @view.backgroundColor = UIColor.whiteColor
 
     @text_field                        = UITextField.alloc.initWithFrame [[0,0],[160,26]]
     # Text alignment is center
@@ -26,11 +25,24 @@ class TextViewController < UIViewController
   end
 
   def changeBackgroungColor(sender)
+    if validateHex(@text_field.text) == nil
+      alert = UIAlertView.new
+      alert.message = "#{@text_field.text} is not valid hex color!"
+      alert.addButtonWithTitle 'OK'
+      alert.show
+
+      return
+    end
     @color = colorWithHex(@text_field.text)
     self.view.backgroundColor = @color
   end
 
   def colorWithHex(hex)
     color = String.new(@text_field.text).to_color
+  end
+
+  def validateHex(hex)
+    rp = Regexp.new("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")
+    return rp =~ hex
   end
 end
